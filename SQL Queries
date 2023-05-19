@@ -1,0 +1,120 @@
+/*update the address of a hotel Manager whose id is 614*/
+update manager set M_Address=&#39;vijayawada&#39; where M_id=614
+
+/*Insert a coloumn name called Blood group with data type of varchar (10) and
+constrain as null in customer table,manager table and staff table.*/
+alter table customer add BloodGroup varchar (10) null
+alter table manager add BloodGroup varchar (10) null
+alter table staff add BloodGroup varchar (10) null
+
+/*Display the total cost of all facities which are avilable.*/
+selectsum(F_cost)fromFacilities_available
+
+/*Display the details of customer who has given rating more than 7.*/
+select * from customer where crating&gt=7;
+
+/*Create view as hotel_manager whose address is tirupathi and update view
+and drop the view.*/
+create view hotel_manager from Manager as
+select M_id, M_name, M_gender
+from Manager where address=&#39;tirupathi&#39;
+select * from hotel_manager
+update manager set M_name=&#39;dhanya&#39; where M_id=605
+drop view hotel_manager
+
+/*Find the total no:of customers whose age is greater than 60 and rating=9*/
+select count(CID) from customer where age&gt;60 and crating=9
+
+/*Find the ID&#39;s of customer whose contact is null.*/
+select CID from customer where contact=null.
+
+/*Find the age and names of customers whose name begin and ends with p and a
+and having atleast three characters.*/
+select c.CName, c.age from customers c where CName like &#39;p_%a&#39;
+
+/*Find the ID&#39;s and names of customers who have given rating more than 8.*/
+select c.CID, c.CName from customers c where rating&gt;8
+
+/*Display the names of facilties that are available.*/
+select F_name from Facilities_available
+
+/*Display the total count of staff members.*/
+select count(s_sid) as staff_count from staff
+
+/*Display the names and mobile number of male managers.*/
+select m.M_name, m.M_Mobile from manager m where M_gender=&#39;F&#39;
+
+/*Display the names of departments using order by statement.*/
+select Dname from Depart order by Dname asc
+
+/*Find the details of the customer whose age is between 20 and 30.*/
+select * from customers where age between 20 and 30
+
+/*find the ID and name of managers who belong to department 5 and tirupathi.*/
+select M_id, M_name from manager where DID=5 and M_Address=&#39;tirupathi&#39;
+
+/*Find the total number of hotels that are in this city.*/
+SELECT COUNT(HID) AS num_hotels FROM Hotel;
+
+/*Update the contact of a particular staff.*/
+update staff set s_mobile=&#39;7672044500&#39; where s_sid=513
+
+/*Insert a column name called R_cost with datatype as money and constraint
+as null in rom table and insert values in it.*/
+alter table Room add R_cost money null
+update Room set R_cost=3000 where R_number=10 or R_number=12 or R_number=13
+update Room set R_cost=3250 where R_number=17 or R_number=19 or R_number=20
+update Room set R_cost=3500 where R_number=23 or R_number=24 or R_number=26
+update Room set R_cost=3750 where R_number=27 or R_number=30 or R_number=31
+update Room set R_cost=4000 where R_number=34 or R_number=37 or R_number=40
+
+/*Find the name of the hotel whose name starts with b and having atleast five
+characters.*/
+select Hname from hotel where Hname like &#39;b_%&#39;
+
+/*Display the average of all the facilities costs.*/
+select avg(F_cost) as Avg_fac_cost from Facilities_available
+
+/*Find the mobile number of staff whose name ends with i.*/
+select s_mobile from staff where s_name like &#39;%i&#39;
+
+/*create a view from customers which includes CID, CName and mobile
+number of customers of age &gt;=30.*/
+create view customer_details as
+select CID, CName, Cmobile
+from customers where age&gt;=30
+select * from customer_details
+
+/*Find the booking id of customer who booked the room 19.*/
+select b.B_id from Booking b, Room r where b.R_number=r.R_number and r.R_number=19
+
+/*Display the top five cid&#39;s of customers.*/
+select top(5) CID from customer
+
+/*Find the ID&#39;s and count of ID&#39;s of customers whose age is greater than 25 (
+use group by statement).*/
+select CID, count(CID) as count from customers
+where age&gt;25 group by CID
+
+/*Find names of manager of hotel.*/
+select M_name from manager m, hotel h where h.HID=m.HID
+
+/*Find the staff who belongs to food department*/
+select s_name from staff s,Depart D where D.Dname=&#39;food&#39; and s.DID=D.DID
+
+/*Display the names of mangers who belongs to security and house keeping
+department. ( use UNION)*/
+select m.M_name from manager m,Depart D,hotel h where D.Dname=&#39;security&#39;
+and m.DID=D.DID and m.HID=h.HID
+UNION
+select m.M_name from manager m,Depart D,hotel h where D.Dname=&#39;house keeping&#39;
+and m.DID=D.DID and m.HID=h.HID
+
+/*Find the booking id who booked roomtype as ac*/
+select b.B_id from Room r,Booking b where b.R_number=r.R_number and r.R_type=&#39;A&#39;
+
+/*Find cid, cname and from customer whose age is minimum*/
+select CID,CName,age from customers where age=(select min(age) from customers)
+
+/*Display the total no of departments*/
+Select count (DID) from Depart
