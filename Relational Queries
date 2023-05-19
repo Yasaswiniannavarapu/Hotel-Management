@@ -1,0 +1,112 @@
+# Hotel-Management
+database creation and queries on hotel management using Mysql.
+/* create a table hotel*/
+create table hotel
+(HID int primary key,
+Hname varchar (30) not null,
+Hemail varchar (30) not null,
+Address varchar (30) null,
+Mobile varchar (10) null
+)
+insert into hotel values(101,&#39;novotel&#39;,&#39;novotel@gmail.com&#39;,&#39;vizag&#39;,9998887771)
+insert into hotel values(102,&#39;regency&#39;,&#39;regency@gmail.com&#39;,&#39;chennai&#39;,9998887772)
+insert into hotel values(103,&#39;carlton&#39;,&#39;carlton@gmail.com&#39;,&#39;tiruapthi&#39;,9998887773)
+insert into hotel values(104,&#39;taj&#39;,&#39;taj@gmail.com&#39;,&#39;mumbai&#39;,9998887774)
+insert into hotel values(105,&#39;savoy&#39;,&#39;savoy@gmail.com&#39;,&#39;chennai&#39;,9998887775)
+select * from hotel
+/*create a table Rooms*/
+create table Room
+(
+R_type char (1) not null check(R_type=&#39;A&#39; or R_type=&#39;N&#39;),
+R_number int primary key,
+R_floor int null
+)
+insert into Room values(&#39;A&#39;,10,1)
+insert into Room values(&#39;A&#39;,12,1)
+insert into Room values(&#39;A&#39;,13,2)
+insert into Room values(&#39;N&#39;,23,2)
+insert into Room values(&#39;N&#39;,24,2)
+insert into Room values(&#39;N&#39;,27,5)
+select * from Room
+/*create a table Facilities Available*/
+create table Facilities_available
+(
+F_id int primary key,
+F_name varchar(20) not null,
+F_cost money not null
+)
+insert into Facilities_available values(201,&#39;food&#39;,2000)
+insert into Facilities_available values(202,&#39;internet&#39;,1000)
+insert into Facilities_available values(203,&#39;books&#39;,5000)
+insert into Facilities_available values(204,&#39;computer&#39;,1500)
+insert into Facilities_available values(205,&#39;laundry&#39;,500)
+select * from Facilities_available
+/* create a table Booking*/
+create table Booking
+(
+B_id int primary key,
+B_date date not null,
+R_number int not null foreign key references Room(R_number)
+insert into Booking values (301,&#39;2022-01-15&#39;,&#39;10&#39;)
+insert into Booking values (302,&#39;2022-01-22&#39;,&#39;12&#39;)
+insert into Booking values (303,&#39;2022-03-07&#39;,&#39;13&#39;)
+insert into Booking values (304,&#39;2022-02-10&#39;,&#39;17&#39;)
+insert into Booking values (305,&#39;2022-04-11&#39;,&#39;19&#39;)
+/* create a table customers */
+create table customers
+(
+CID int primary key,
+CName varchar (20) not null,
+Cmobile bigint not null,
+age bigint null,
+crating bigint not null
+)
+insert into customers values (401,&#39;hima&#39;,9997776661,18,7)
+insert into customers values (402,&#39;harshitha&#39;,9997776662,19,7)
+insert into customers values (403,&#39;janu&#39;,9997776663,20,7)
+insert into customers values (404,&#39;poojitha&#39;,9997776664,18,6)
+insert into customers values (405,&#39;sreekar&#39;,9997776665,21,8)
+insert into customers values (406,&#39;rithu&#39;,9997776666,30,9)
+select * from customers
+/*create table Depart */
+create table Depart
+(
+DID int primary key,
+Dname varchar (20) not null
+)
+insert into Depart values(1,&#39;food&#39;)
+insert into Depart values (2,&#39;housekeeping&#39;)
+insert into Depart values(3,&#39;security&#39;)
+insert into Depart values(4,&#39;service&#39;)
+insert into Depart values(5,&#39;management&#39;)
+select * from Depart
+/* create table manger*/
+Create table Manager
+(
+M_id int not null,
+M_name varchar (20) not null,
+DID int not null foreign key references Depart (DID),
+M_gender char (1) not null check(M_gender=&#39;M&#39; or M_gender=&#39;F&#39;),
+M_Address varchar (30) null,
+M_Mobile varchar (10) null,
+HID int not null foreign key references hotel (HID)
+)
+insert into manager values(601,&#39;shriya&#39;,1,&#39;F&#39;,&#39;tirupathi&#39;,9998886661,101)
+insert into manager values(602,&#39;keishna&#39;,2,&#39;M&#39;,&#39;chennai&#39;,9998886662,102)
+insert into manager values(603,&#39;meera&#39;,3,&#39;F&#39;,&#39;kerala&#39;,9998886663,103)
+insert into manager values(604,&#39;tarun&#39;,4,&#39;M&#39;,&#39;chennai&#39;,9998886664,104)
+insert into manager values(605,&#39;jansi&#39;,5,&#39;F&#39;,&#39;tirupathi&#39;,9998886665,105)
+/*create table staff */
+create table staff
+(
+s_sid int primary key,
+s_name varchar (30) not null,
+DID int not null foreign key references Depart(DID) ,
+s_mobile varchar (10) null
+)
+insert into staff values(501,&#39;vicky&#39;,1,8889997771)
+insert into staff values(502,&#39;ram&#39;,2,8889997772)
+insert into staff values(503,&#39;kiran&#39;,3,8889997773)
+insert into staff values(504,&#39;sunny&#39;,4,8889997774)
+insert into staff values(505,&#39;vijay&#39;,5,8889997775)
+select * from staff
